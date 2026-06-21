@@ -1,0 +1,17 @@
+# Claude Code local settings (machine-specific)
+.claude/settings.local.json
+
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+
+# Dataset CSVs are ignored via data/.gitignore

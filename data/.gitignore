@@ -1,0 +1,6 @@
+# CSV dataset files — do NOT commit (large binary-ish files, not source code)
+*.csv
+
+# Keep the import script and this gitignore tracked
+!import.sql
+!.gitignore

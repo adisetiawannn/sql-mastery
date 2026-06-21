@@ -44,7 +44,8 @@ CREATE TABLE product_category_name_translation (
 
 CREATE TABLE products (
     product_id                 TEXT PRIMARY KEY,
-    product_category_name      TEXT REFERENCES product_category_name_translation (product_category_name),
+    -- No FK here: dataset has categories (e.g. 'pc_gamer') absent from the translation table
+    product_category_name      TEXT,
     product_name_lenght        INTEGER,       -- typo preserved from source CSV header
     product_description_lenght INTEGER,       -- typo preserved from source CSV header
     product_photos_qty         INTEGER,

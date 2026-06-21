@@ -14,47 +14,62 @@ brew services stop  postgresql@17   # stop
 brew services list                  # check status
 ```
 
+Binary path: `/opt/homebrew/opt/postgresql@17/bin/` — tambahkan ke PATH di `~/.zshrc`:
+
+```bash
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+```
+
 ## Connection Details
 
 | Parameter | Value |
 |-----------|-------|
-| Host | `localhost` |
+| Host | `127.0.0.1` |
 | Port | `5432` |
 | Database | `sql_mastery` |
-| User | your macOS username (run `whoami` to check) |
-| Password | *(none — local peer auth)* |
+| User | `960169` (macOS username) |
+| Password | tidak ada — local peer auth via TCP trust |
 
 ### psql (terminal)
 
 ```bash
-psql -U $(whoami) -d sql_mastery
+psql -U 960169 -h 127.0.0.1 -d sql_mastery
 ```
 
-### TablePlus
+### VS Code — SQLTools (workflow utama)
 
-1. Open TablePlus → **Create a new connection** → **PostgreSQL**
-2. Fill in:
-   - **Name:** sql_mastery
-   - **Host:** 127.0.0.1
-   - **Port:** 5432
-   - **User:** *(your macOS username)*
-   - **Password:** *(leave blank)*
-   - **Database:** sql_mastery
-3. Click **Test** → should show green ✓ → **Connect**
+Extension yang terinstall:
+- `mtxr.sqltools` v0.28.5
+- `mtxr.sqltools-driver-pg` v0.5.7
+
+Connection config tersimpan di `.vscode/settings.json`. Cara pakai:
+1. Buka Command Palette → `SQLTools: Connect`
+2. Pilih **sql_mastery (local)**
+3. Tulis query di file `.sql` → `Ctrl+E` (run selected) atau `Ctrl+Shift+E` (run file)
+
+Tidak ada password yang tersimpan — database menggunakan local trust auth, sehingga `.vscode/settings.json` aman untuk di-commit.
 
 ## Dataset Import
 
-CSV files go in the `data/` folder (not committed to git). Import once:
+Dataset: Brazilian E-Commerce Public Dataset by Olist (Kaggle, 9 CSV)
+CSV files ada di folder `data/` — **tidak di-commit** ke git (lihat `data/.gitignore`).
+
+**Metode import:** psql `\copy` via script SQL (bukan Python/pandas).
+`\copy` membaca file dari sisi client — tidak butuh superuser PostgreSQL.
+
+Cara import ulang dari nol (jika perlu):
 
 ```bash
-cd data/
-psql -U $(whoami) -d sql_mastery -f import.sql
+cd path/to/sql-mastery/data
+psql -U 960169 -h 127.0.0.1 -d sql_mastery -f import.sql
 ```
 
-Expected row counts after import:
+Script akan drop semua tabel dulu (aman untuk re-run), lalu CREATE + COPY + CREATE INDEX.
 
-| Table | Rows (approx) |
-|-------|--------------|
+## Row Counts (hasil import aktual)
+
+| Tabel | Rows |
+|-------|------|
 | customers | 99,441 |
 | geolocation | 1,000,163 |
 | sellers | 3,095 |
@@ -64,3 +79,9 @@ Expected row counts after import:
 | order_items | 112,650 |
 | order_payments | 103,886 |
 | order_reviews | 99,224 |
+
+## Catatan Schema
+
+- `products.product_category_name` tidak punya FK ke tabel terjemahan karena dataset Olist punya kategori (mis. `pc_gamer`) yang tidak ada di file terjemahan. Join tetap bisa dilakukan manual dengan `LEFT JOIN`.
+- `geolocation` tidak punya primary key — satu zip code bisa punya banyak koordinat (lat/lng berbeda). Gunakan index `idx_geolocation_zip` untuk lookup performa.
+- Typo di nama kolom produk (`product_name_lenght`, `product_description_lenght`) dipertahankan sesuai header CSV asli.

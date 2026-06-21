@@ -11,7 +11,11 @@ __pycache__/
 
 # IDE / editor
 .idea/
-.vscode/
+# .vscode/settings.json is tracked — contains SQLTools connection config
+.vscode/*.code-workspace
 *.swp
+
+# Personal workflow notes (local only)
+import-database-noted.md
 
 # Dataset CSVs are ignored via data/.gitignore

@@ -24,12 +24,12 @@ sql-mastery/
 ├── data/
 │   ├── import.sql                 ← script import CSV (psql \copy)
 │   └── *.csv                      ← dataset Olist (tidak di-commit)
-├── 01-basics/                     ← SELECT, WHERE, ORDER BY, LIMIT
-├── 02-aggregation/                ← GROUP BY, HAVING, aggregate functions
-├── 03-joins/                      ← INNER / LEFT / RIGHT / FULL / CROSS joins
-├── 04-subqueries-ctes/            ← correlated subqueries, WITH clauses
-├── 05-window-functions/           ← ROW_NUMBER, RANK, LAG/LEAD, running totals
-└── 06-master-patterns/            ← multi-concept analytical queries
+├── 00-basics/                     ← SELECT, WHERE, ORDER BY, LIMIT
+├── 01-aggregation/                ← GROUP BY, HAVING, aggregate functions
+├── 02-joins/                      ← INNER / LEFT / RIGHT / FULL / CROSS joins
+├── 03-subqueries-ctes/            ← correlated subqueries, WITH clauses
+├── 04-window-functions/           ← ROW_NUMBER, RANK, LAG/LEAD, running totals
+└── 05-master-patterns/            ← multi-concept analytical queries
 ```
 
 ## Quick Start
@@ -40,7 +40,7 @@ brew services start postgresql@17
 
 # 2. Import data (setelah download CSV dari Kaggle ke folder data/)
 cd data/
-psql -U 960169 -h 127.0.0.1 -d sql_mastery -f import.sql
+psql -U your_username -h 127.0.0.1 -d sql_mastery -f import.sql
 
 # 3. Buka VS Code dan connect via SQLTools
 # Command Palette → SQLTools: Connect → sql_mastery (local)

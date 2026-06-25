@@ -11,8 +11,7 @@ __pycache__/
 
 # IDE / editor
 .idea/
-# .vscode/settings.json is tracked — contains SQLTools connection config
-.vscode/*.code-workspace
+.vscode/
 *.swp
 
 # Personal workflow notes (local only)

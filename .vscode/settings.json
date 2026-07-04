@@ -1,0 +1,20 @@
+{
+  "sqltools.connections": [
+    {
+      "name": "sql_mastery (local)",
+      "driver": "PostgreSQL",
+      "server": "127.0.0.1",
+      "port": 5432,
+      "database": "sql_mastery",
+      "username": "960169",
+      "password": "",
+      "askForPassword": false,
+      "connectionTimeout": 15
+    }
+  ],
+  "sqltools.autoOpenSessionFiles": false,
+  "sqltools.results.limit": 500,
+  "files.associations": {
+    "data/import.sql": "plaintext"
+  }
+}

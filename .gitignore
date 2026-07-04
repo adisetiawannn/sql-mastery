@@ -11,13 +11,15 @@ __pycache__/
 
 # IDE / editor
 .idea/
-.vscode/
+.vscode/*
+!.vscode/settings.json
 *.swp
 
 # Personal workflow notes (local only)
 import-database-noted.md
 oretan-sql-adi.*
 git-https-method.md
+evaluasi-adi-claude-used.*
 
 # Dataset CSVs are ignored via data/.gitignore
 
